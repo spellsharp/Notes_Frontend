@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Notes from "../components/Notes";
 import AddNote from "../components/AddNote";
+import SearchBar from "../components/SearchBar";
 import "../styles/HomePage.css"; // Create a new CSS file (HomePage.css) for custom styles
 
 const HomePage = () => {
@@ -10,19 +11,19 @@ const HomePage = () => {
       uid: "1",
       title: "Title1",
       body: "Body1",
-      tags: ["tag1", "tag2"],
+      tags: ["tag1", "tag3"],
     },
     {
       uid: "2",
       title: "Title2",
       body: "Body2",
-      tags: ["tag1", "tag2"],
+      tags: ["tag1"],
     },
     {
       uid: "3",
       title: "Title3",
       body: "Body3",
-      tags: ["tag1", "tag2"],
+      tags: ["tag1", "tag2", "tag4"],
     },
   ];
   const [notes, setNotes] = useState(data);
@@ -33,7 +34,7 @@ const HomePage = () => {
         uid: Date.now().toString(),
         title: "",
         body: "",
-        tags: ["tag1", "tag2"],
+        tags: [],
       },
       ...prevNotes,
     ]);
@@ -41,12 +42,23 @@ const HomePage = () => {
 
   return (
     <>
+      <div className="p-3 lg:pl-24 sm:p-2 md:p-5">
+        <SearchBar />
+      </div>
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
-        <div className="mx-auto">
+        <div>
           <TransitionGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {notes.map((note, key) => (
-              <CSSTransition key={note.uid} timeout={500} classNames="note-transition">
-                <Notes propstitle={note.title} propsbody={note.body} />
+              <CSSTransition
+                key={note.uid}
+                timeout={500}
+                classNames="note-transition"
+              >
+                <Notes
+                  propstitle={note.title}
+                  propsbody={note.body}
+                  propstags={note.tags}
+                />
               </CSSTransition>
             ))}
           </TransitionGroup>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { FaTags, FaTrash } from "react-icons/fa";
 
-const Notes = ({ propstitle, propsbody }) => {
+const Notes = ({ propstitle, propsbody, propstags }) => {
   const [clicked, setClicked] = useState(false);
   const [title, setTitle] = useState(propstitle);
   const [body, setBody] = useState(propsbody);
+  const [tags, setTags] = useState(propstags);
   const editableRef = useRef(null);
 
   useEffect(() => {
@@ -35,11 +37,22 @@ const Notes = ({ propstitle, propsbody }) => {
     setBody(e.target.value);
   };
 
+  const handleTags = (e) => {
+    e.stopPropagation();
+    console.log("Tags");
+  };
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    console.log("Delete");
+  }
+
   return (
     <div
       ref={editableRef}
       onClick={handleClick}
-      className="border border-white border-opacity-20 shadow-xl rounded-3xl text-white max-w-[400px] max-h-[250px] p-7">
+      className="border border-white border-opacity-20 shadow-xl rounded-3xl text-white max-w-[400px] max-h-[250px] p-7"
+    >
       {clicked ? (
         <>
           <input
@@ -67,6 +80,19 @@ const Notes = ({ propstitle, propsbody }) => {
           <p className="overflow-hidden whitespace-nowrap overflow-ellipsis">
             {body}
           </p>
+          <div className="mt-5 flex space-x-3">
+            {tags.map((tag, key) => (
+              <div className="rounded-3xl text-sm border border-gray-400 px-2">
+                {tag}
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 float-right flex space-x-5">
+            <button onClick={handleTags}>
+              <FaTags />
+            </button>
+            <button onClick={handleDelete}><FaTrash /></button>
+          </div>
         </div>
       )}
     </div>
