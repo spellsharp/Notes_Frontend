@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 const AddNote = () => {
   return (
     <>
-      <button className="rounded-xl p-5 max-w-fit max-h-fit bg-violet-500 hover:bg-violet-600">
+      <button className="rounded-xl p-5 max-w-fit max-h-fit bg-violet-500 hover:bg-violet-600 shadow-xl shadow-slate-950">
         <FaPlus size={"30px"} color={"white"} />
       </button>
     </>
