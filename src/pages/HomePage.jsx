@@ -5,10 +5,13 @@ import AddNote from "../components/AddNote";
 import SearchBar from "../components/SearchBar";
 import "../styles/HomePage.css";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [addedNew, setAddedNew] = useState(false);
   const handleToggle = (toggle) => {
     setToggle(toggle);
   };
@@ -26,20 +29,33 @@ const HomePage = () => {
   };
 
   const handleAdd = () => {
-    setData((prevData) => [
-      {
-        id: "",
-        title: "",
-        description: "",
-        tags: [],
-      },
-      ...prevData,
-    ]);
-  };
+    try{
+      fetch(`http://localhost:8000/notes/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: "",
+          description: "",
+          tags: {}
+        }),
+      });
+      getData();
+    }
+    catch(error){
+      console.error("Error:", error);
+    }
+    finally {
+      setAddedNew(true);
+      console.log("Added note");
+    }
+  }
 
   useEffect(() => {
     getData();
-  }, []);
+    setAddedNew(false);
+  }, [addedNew]);
 
   useEffect(() => {
     console.log("Data has changed: ", data);
@@ -54,46 +70,51 @@ const HomePage = () => {
       setData((prevData) => {
         return prevData.filter((note) => note.id !== id);
       });
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const handleUpdate = async (data) => {
-    console.log('Update: ', data.id);
-    try {
-      fetch(`http://localhost:8000/notes/${data.id}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
+  const handleUpdate = async (noteData) => {
+    setData((prevData) => {
+      return prevData.map((note) => {
+        if (note.id === noteData.id) {
+          return noteData;
+        } else {
+          return note;
+        }
       });
+    });
+    console.log("Update: ", noteData);
+    try {
+      const response = await fetch(
+        `http://localhost:8000/notes/${noteData.id}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(noteData),
+        }
+      );
+      setSaving(true);
+      if (!response.ok) {
+        alert("Failed to update note:", response.statusText);
+      }
     } catch (error) {
       console.error("Error:", error);
     }
-  }
-
-  const handleCreate = async (data) => {
-    console.log('Create: ', data);
-    try {
-      fetch(`http://localhost:8000/notes/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      });
-    } catch (error) {
-      console.error("Error:", error);
+    finally {
+      
+      setSaving(false);
     }
-  }
+  };
 
   return (
     <>
-      <div className="p-3 lg:pl-24 sm:p-2 md:p-5">
+      <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-5">
         <SearchBar onToggleChange={handleToggle} />
+        {saving ? <ClipLoader color="white"/> : <></>}
       </div>
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
         <div>
@@ -111,13 +132,13 @@ const HomePage = () => {
                   propstags={note.tags}
                   onDelete={handleDelete}
                   onUpdate={handleUpdate}
-                  onCreate={handleCreate}
                 />
               </CSSTransition>
             ))}
           </TransitionGroup>
         </div>
       </div>
+
       <div className="fixed bottom-0 right-0 p-5" onClick={handleAdd}>
         <AddNote />
       </div>

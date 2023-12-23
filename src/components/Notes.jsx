@@ -9,7 +9,6 @@ const Notes = ({
   propsid,
   onDelete,
   onUpdate,
-  onCreate,
 }) => {
   const [clicked, setClicked] = useState(false);
   const [noteClassname, setNoteClassname] = useState({
@@ -23,16 +22,10 @@ const Notes = ({
     tags: propstags,
   });
   const editableRef = useRef(null);
+
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (editableRef.current && !editableRef.current.contains(e.target)) {
-        if (noteData.id) {
-          onUpdate(noteData);
-          console.log("Updating note");
-        } else {
-          onCreate(noteData);
-          console.log("Creating note");
-        }
         setNoteClassname({
           opacity: 5,
           shadow: "md",
@@ -43,16 +36,50 @@ const Notes = ({
 
     if (clicked) {
       document.addEventListener("mousedown", handleOutsideClick);
+      return () => {
+        document.removeEventListener("mousedown", handleOutsideClick);
+      };
     }
 
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+    // Use useEffect to execute code after the state has been updated
+    if (!clicked && noteData.id === "") {
+      onCreate(noteData);
+      console.log("Creating note: ", noteData);
+    }
+  }, [clicked, noteData]);
+
+  useEffect(() => {
+    const updateNote = () => {
+      if (noteData.id) {
+        onUpdate(noteData);
+        console.log("Updating note: ", noteData);
+      }
     };
-  }, [clicked]);
+
+    updateNote();
+  }, [noteData]);
+  const onCreate = async (data) => {
+    console.log("Create: ", data);
+    try {
+      const response = await fetch(`http://localhost:8000/notes/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to create note:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleClick = () => {
     setNoteClassname({
-      opacity: 10,
+      opacity: 0,
       shadow: "xl",
     });
     setClicked(true);
@@ -64,19 +91,23 @@ const Notes = ({
 
   const handleTitleChange = (e) => {
     setNoteData((prevData) => {
-      return {
+      const newData = {
         ...prevData,
         title: e.target.value,
       };
+      console.log("Changed title: ", newData);
+      return newData;
     });
   };
 
   const handleBodyChange = (e) => {
     setNoteData((prevData) => {
-      return {
+      const newData = {
         ...prevData,
         description: e.target.value,
       };
+      console.log("Changed body: ", newData);
+      return newData;
     });
   };
 

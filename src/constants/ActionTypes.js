@@ -1,0 +1,10 @@
+export const SET_TITLE = "SET_TITLE";
+export const SET_DESCRIPTION = "SET_DESCRIPTION";
+export const SET_TAG = "SET_TAG";
+export const SET_PUBLIC = "SET_PUBLIC";
+export const SET_PRIVATE = "SET_PRIVATE";
+// export const UPDATE_NOTE = "UPDATE_NOTE";
+export const CREATE_NOTE = "CREATE_NOTE";
+export const CREATE_TAG = "CREATE_TAG";
+export const GLOBAL_SEARCH = "GLOBAL_SEARCH";
+export const LOCAL_SEARCH = "LOCAL_SEARCH";
