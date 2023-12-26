@@ -10,8 +10,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [addedNew, setAddedNew] = useState(false);
+  const [randomState, setRandomState] = useState(true);
   const handleToggle = (toggle) => {
     setToggle(toggle);
   };
@@ -29,7 +29,7 @@ const HomePage = () => {
   };
 
   const handleAdd = () => {
-    try{
+    try {
       fetch(`http://localhost:8000/notes/`, {
         method: "POST",
         headers: {
@@ -38,19 +38,17 @@ const HomePage = () => {
         body: JSON.stringify({
           title: "",
           description: "",
-          tags: {}
+          tags: {},
         }),
       });
       getData();
-    }
-    catch(error){
+    } catch (error) {
       console.error("Error:", error);
-    }
-    finally {
+    } finally {
       setAddedNew(true);
       console.log("Added note");
     }
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -62,16 +60,22 @@ const HomePage = () => {
   }, [data]);
 
   const handleDelete = async (id) => {
-    console.log("Delete: ", id);
-    try {
-      fetch(`http://localhost:8000/notes/${id}/`, {
-        method: "DELETE",
-      });
-      setData((prevData) => {
-        return prevData.filter((note) => note.id !== id);
-      });
-    } catch (error) {
-      console.error("Error:", error);
+    if (window.confirm("Are you sure you want to delete this note?")) {
+      console.log("Delete: ", id);
+      try {
+        fetch(`http://localhost:8000/notes/${id}/`, {
+          method: "DELETE",
+        });
+        setData((prevData) => {
+          return prevData.filter((note) => note.id !== id);
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      console.log("Note deleted");
+    }
+    else {
+      console.log("Note not deleted");
     }
   };
 
@@ -97,16 +101,11 @@ const HomePage = () => {
           body: JSON.stringify(noteData),
         }
       );
-      setSaving(true);
       if (!response.ok) {
         alert("Failed to update note:", response.statusText);
       }
     } catch (error) {
       console.error("Error:", error);
-    }
-    finally {
-      
-      setSaving(false);
     }
   };
 
@@ -114,7 +113,7 @@ const HomePage = () => {
     <>
       <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-5">
         <SearchBar onToggleChange={handleToggle} />
-        {saving ? <ClipLoader color="white"/> : <></>}
+        {randomState ? <ClipLoader color="white" /> : <></>}
       </div>
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
         <div>
