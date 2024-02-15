@@ -17,7 +17,7 @@ Follow these simple steps to run the Notes App frontend on your local machine:
 
 2. **Navigate to the Project Directory:**
    ```
-   cd notes-app-frontend
+   cd Notes_Frontend
    ```
 
 3. **Install Dependencies:**
