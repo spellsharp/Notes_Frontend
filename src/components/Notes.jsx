@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaTrash, FaCalendar } from "react-icons/fa";
 import { MdArrowOutward } from "react-icons/md";
 import NotesModal from "./NotesModal";
+import CalendarModal from "./CalendarModal";
 
 const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
   const [clicked, setClicked] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [noteClassname, setNoteClassname] = useState({
     opacity: 5,
     shadow: "md",
@@ -37,7 +39,6 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
 
     if (!clicked && noteData.id === "") {
       onCreate(noteData);
-      console.log("Creating note: ", noteData);
     }
   }, [clicked, noteData]);
 
@@ -45,7 +46,6 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
     const updateNote = () => {
       if (noteData.id) {
         onUpdate(noteData);
-        console.log("Updating note: ", noteData);
       }
     };
 
@@ -112,15 +112,21 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
 
   const handleModalClose = (e) => {
     setShowNotesModal(false);
+    setShowCalendarModal(false);
     console.log("Parent: Modal closed");
   };
 
+  const handleCalendar = (e) => {
+    e.stopPropagation();
+    setShowCalendarModal(true);
+    console.log("Calendar clicked");
+  };
   return (
     <>
       <div
         ref={editableRef}
         onClick={handleClick}
-        className={`shadow-${noteClassname.shadow} border border-opacity-${noteClassname.opacity} border-white  shadow-slate-950 rounded-3xl text-white max-w-[400px] min-h-[250px] p-7 hover:border-opacity-10`}
+        className={`shadow-${noteClassname.shadow} shadow-slate-950 rounded-3xl border border-white border-opacity-10 text-white max-w-[400px] min-h-[250px] p-7 hover:border-opacity-10`}
       >
         {clicked ? (
           <div className="h-full">
@@ -168,7 +174,7 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
             <div className="flex justify-between">
               <div className="mt-5 flex space-x-5 text-gray-500">
                 <button
-                  onClick={console.log("Clicked")}
+                  onClick={handleCalendar}
                   className="hover:text-white transition-colors duration-200"
                 >
                   <FaCalendar />
@@ -191,6 +197,9 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
           isOpen={showNotesModal}
           onClose={handleModalClose}
         />
+      )}
+      {showCalendarModal && (
+        <CalendarModal isOpen={showCalendarModal} onClose={handleModalClose} />
       )}
     </>
   );

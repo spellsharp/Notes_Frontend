@@ -45,7 +45,6 @@ const HomePage = () => {
       console.error("Error:", error);
     } finally {
       setAddedNew(true);
-      console.log("Added note");
     }
   };
 
@@ -53,10 +52,6 @@ const HomePage = () => {
     getData();
     setAddedNew(false);
   }, [addedNew]);
-
-  useEffect(() => {
-    console.log("Data has changed: ", data);
-  }, [data]);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this note?")) {
@@ -88,7 +83,6 @@ const HomePage = () => {
         }
       });
     });
-    console.log("Update: ", noteData);
     try {
       const response = await fetch(
         `http://localhost:8000/notes/${noteData.id}/`,
@@ -100,9 +94,6 @@ const HomePage = () => {
           body: JSON.stringify(noteData),
         }
       );
-      if (!response.ok) {
-        alert("Failed to update note:", response.status);
-      }
     } catch (error) {
       console.error("Error:", error);
     }
