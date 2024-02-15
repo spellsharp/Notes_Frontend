@@ -5,7 +5,6 @@ Welcome to our Notes App frontend repository! This React application provides a 
 #### Features:
 - Create, edit, and delete notes effortlessly.
 - User-friendly interface designed with React.
-- Smooth navigation and responsiveness.
 
 #### How to Run:
 
@@ -13,9 +12,8 @@ Follow these simple steps to run the Notes App frontend on your local machine:
 
 1. **Clone the Repository:**
    ```
-   git clone https://github.com/your-username/notes-app-frontend.git
+   git clone https://github.com/spellsharp/notes_frontend.git
    ```
-   Replace `your-username` with your GitHub username.
 
 2. **Navigate to the Project Directory:**
    ```
@@ -44,10 +42,6 @@ We welcome contributions from the community to improve the Notes App. If you fin
 #### Feedback:
 
 We would love to hear your feedback about the Notes App! If you have any suggestions or encounter any issues, please don't hesitate to let us know by opening an issue.
-
-#### License:
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
