@@ -11,7 +11,7 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [addedNew, setAddedNew] = useState(false);
-  const [randomState, setRandomState] = useState(true);
+  // const [randomState, setRandomState] = useState(true);
   const handleToggle = (toggle) => {
     setToggle(toggle);
   };
@@ -38,7 +38,6 @@ const HomePage = () => {
         body: JSON.stringify({
           title: "",
           description: "",
-          tags: {},
         }),
       });
       getData();
@@ -102,7 +101,7 @@ const HomePage = () => {
         }
       );
       if (!response.ok) {
-        alert("Failed to update note:", response.statusText);
+        alert("Failed to update note:", response.status);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -113,7 +112,7 @@ const HomePage = () => {
     <>
       <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-5">
         <SearchBar onToggleChange={handleToggle} />
-        {randomState ? <ClipLoader color="white" /> : <></>}
+        {/* {randomState ? <ClipLoader color="white" /> : <></>} */}
       </div>
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
         <div>
@@ -128,7 +127,6 @@ const HomePage = () => {
                   propsid={note.id}
                   propstitle={note.title}
                   propsbody={note.description}
-                  propstags={note.tags}
                   onDelete={handleDelete}
                   onUpdate={handleUpdate}
                 />
