@@ -6,7 +6,6 @@ import SearchBar from "../components/SearchBar";
 import "../styles/HomePage.css";
 import axios from "axios";
 import Header from "../components/Header";
-// import ClipLoader from "react-spinners/ClipLoader";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
@@ -101,7 +100,6 @@ const HomePage = () => {
       <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-14">
         <Header />
         <SearchBar onToggleChange={handleToggle} />
-        {/* {randomState ? <ClipLoader color="white" /> : <></>} */}
       </div>
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
         <div>

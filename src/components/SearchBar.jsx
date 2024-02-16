@@ -9,12 +9,12 @@ const SearchBar = ({ onToggleChange }) => {
   const [toggle, setToggle] = useState(false);
   return (
     <>
-      <div className="flex items-center space-x-4">
+      <div className="flex lg:items-center lg:space-x-4 lg:flex-row md:space-x-4 md:flex-row sm:flex-col sm:space-y-4 flex-col space-y-4">
         <input
           className="rounded-xl shadow-lg shadow-slate-950 w-full max-w-xl border border-white border-opacity-20 outline-none p-5 bg-violet-500 text-white placeholder:text-white focus:bg-violet-600"
           placeholder="Search"
         ></input>
-        <div className="flex items-center space-x-2  p-3 bg-black bg-opacity-20 rounded-xl shadow-md shadow-slate-950">
+        <div className="flex items-center w-fit space-x-2  p-3 bg-black bg-opacity-20 rounded-xl shadow-md shadow-slate-950">
           <Toggle
             id="cheese-status"
             defaultChecked={false}
