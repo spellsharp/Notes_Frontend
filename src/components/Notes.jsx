@@ -147,7 +147,7 @@ const Notes = ({
       <div
         ref={editableRef}
         onClick={handleClick}
-        className={`shadow-${noteClassname.shadow} shadow-slate-950 rounded-3xl border border-white border-opacity-10 text-white max-w-[400px] min-h-[250px] p-7 hover:border-opacity-10`}
+        className={`shadow-${noteClassname.shadow} shadow-slate-950 rounded-xl border border-white border-opacity-10 text-white max-w-[400px] min-h-[250px] p-7 hover:border-opacity-10`}
       >
         {clicked ? (
           <div className="h-full">
