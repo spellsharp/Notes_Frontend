@@ -158,11 +158,9 @@ const Notes = ({
                 onChange={handleTitleChange}
                 placeholder="Title"
               ></input>
-              <div className="">
+              <div className="hover:opacity-70 text-3xl cursor-pointer">
                 <MdArrowOutward
-                  fontSize={"25px"}
                   onClick={handleArrowClick}
-                  cursor={"pointer"}
                 />
               </div>
             </div>
