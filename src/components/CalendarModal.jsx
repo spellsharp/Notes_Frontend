@@ -29,14 +29,12 @@ export default function CalendarModal({
   const [open, setOpen] = useState(isOpen);
 
   const handleClose = () => {
-    console.log("Closing modal");
     setOpen(false);
     onClose();
   };
   const handleDeadline = (deadlineDate) => {
     setDeadline(deadlineDate);
     onDeadlineChange(deadline);
-    console.log("At calendar modal: ", deadline);
   };
 
   return (

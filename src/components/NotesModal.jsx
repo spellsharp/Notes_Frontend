@@ -33,7 +33,6 @@ export default function NotesModal({ propsid, propstitle, propsbody, isOpen, onC
   const [open, setOpen] = useState(isOpen);
 
   const handleClose = () => {
-    console.log("Closing modal");
     setOpen(false);
     onClose();
   };

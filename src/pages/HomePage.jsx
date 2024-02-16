@@ -5,7 +5,8 @@ import AddNote from "../components/AddNote";
 import SearchBar from "../components/SearchBar";
 import "../styles/HomePage.css";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import Header from "../components/Header";
+// import ClipLoader from "react-spinners/ClipLoader";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
@@ -56,7 +57,6 @@ const HomePage = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this note?")) {
-      console.log("Delete: ", id);
       try {
         fetch(`http://localhost:8000/notes/${id}/`, {
           method: "DELETE",
@@ -67,10 +67,6 @@ const HomePage = () => {
       } catch (error) {
         console.error("Error:", error);
       }
-      console.log("Note deleted");
-    }
-    else {
-      console.log("Note not deleted");
     }
   };
 
@@ -95,7 +91,6 @@ const HomePage = () => {
           body: JSON.stringify(noteData),
         }
       );
-      console.log("updating note:" + JSON.stringify(noteData));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -103,7 +98,8 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-5">
+      <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-14">
+        <Header />
         <SearchBar onToggleChange={handleToggle} />
         {/* {randomState ? <ClipLoader color="white" /> : <></>} */}
       </div>
@@ -129,6 +125,7 @@ const HomePage = () => {
           </TransitionGroup>
         </div>
       </div>
+      <div className="h-52"></div>
 
       <div className="fixed bottom-0 right-0 p-5" onClick={handleAdd}>
         <AddNote />

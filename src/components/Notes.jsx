@@ -60,7 +60,6 @@ const Notes = ({
     updateNote();
   }, [noteData]);
   const onCreate = async (data) => {
-    console.log("Create: ", data);
     try {
       const response = await fetch(`http://localhost:8000/notes/`, {
         method: "POST",
@@ -87,8 +86,7 @@ const Notes = ({
   };
 
   const handleArrowClick = () => {
-    setShowNotesModal(true);
-    console.log("Arrow clicked: Opening modal");
+    setShowNotesModal(true);    
   };
 
   const handleTitleChange = (e) => {
@@ -97,7 +95,6 @@ const Notes = ({
         ...prevData,
         title: e.target.value,
       };
-      console.log("Changed title: ", newData);
       return newData;
     });
   };
@@ -108,7 +105,6 @@ const Notes = ({
         ...prevData,
         description: e.target.value,
       };
-      console.log("Changed body: ", newData);
       return newData;
     });
   };
@@ -121,24 +117,19 @@ const Notes = ({
   const handleModalClose = (e) => {
     setShowNotesModal(false);
     setShowCalendarModal(false);
-    console.log("Parent: Modal closed");
   };
 
   const handleCalendar = (e) => {
     e.stopPropagation();
-    setShowCalendarModal(true);
-    console.log("Calendar clicked");
+    setShowCalendarModal(true);    
   };
 
   const handleDeadlineChange = (date) => {
-    // const formattedDate = date.toISOString();
-    console.log(date);
     setNoteData((prevData) => {
       const newData = {
         ...prevData,
         deadline: date,
       };
-      console.log("Changed deadline: ", newData);
       return newData;
     });
   };
