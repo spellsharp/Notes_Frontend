@@ -11,7 +11,7 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [addedNew, setAddedNew] = useState(false);
-  // const [randomState, setRandomState] = useState(true);
+
   const handleToggle = (toggle) => {
     setToggle(toggle);
   };
@@ -96,7 +96,7 @@ const HomePage = () => {
   };
 
   return (
-    <>
+    <div className="py-3">
       <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-14">
         <Header />
         <SearchBar onToggleChange={handleToggle} />
@@ -128,7 +128,7 @@ const HomePage = () => {
       <div className="fixed bottom-0 right-0 p-5" onClick={handleAdd}>
         <AddNote />
       </div>
-    </>
+    </div>
   );
 };
 

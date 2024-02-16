@@ -14,7 +14,7 @@ const SearchBar = ({ onToggleChange }) => {
           className="rounded-xl shadow-lg shadow-slate-950 w-full max-w-xl border border-white border-opacity-20 outline-none p-5 bg-violet-500 text-white placeholder:text-white focus:bg-violet-600"
           placeholder="Search"
         ></input>
-        <div className="flex items-center w-fit space-x-2  p-3 bg-black bg-opacity-20 rounded-xl shadow-md shadow-slate-950">
+        <div className="flex w-fit space-x-2  p-3 bg-black bg-opacity-20 rounded-xl shadow-md shadow-slate-950">
           <Toggle
             id="cheese-status"
             defaultChecked={false}

@@ -6,12 +6,18 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
 
-const darkTheme = createTheme({
+const customTheme = createTheme({
   palette: {
     mode: "dark",
+    background: {
+      default: "#171221",
+      paper: "rgba(62, 28, 121, 0.95)",
+    },
+    primary: {
+      main: "#f3e0ec",
+    },
   },
 });
 
@@ -66,7 +72,7 @@ export default function NotesModal({
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={customTheme}>
       <React.Fragment>
         <BootstrapDialog
           onClose={handleClose}
