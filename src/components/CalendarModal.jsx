@@ -19,18 +19,24 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function NotesModal({ propsid, propstitle, propsbody, isOpen, onClose }) {
-  const [noteData, setNoteData] = useState({
-    id: propsid,
-    title: propstitle,
-    description: propsbody,
-  });
+export default function CalendarModal({
+  propsdeadline,
+  isOpen,
+  onClose,
+  onDeadlineChange,
+}) {
+  const [deadline, setDeadline] = useState(propsdeadline);
   const [open, setOpen] = useState(isOpen);
 
   const handleClose = () => {
     console.log("Closing modal");
     setOpen(false);
     onClose();
+  };
+  const handleDeadline = (deadlineDate) => {
+    setDeadline(deadlineDate);
+    onDeadlineChange(deadline);
+    console.log("At calendar modal: ", deadline);
   };
 
   return (
@@ -41,7 +47,7 @@ export default function NotesModal({ propsid, propstitle, propsbody, isOpen, onC
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <MyCalendar />
+          <MyCalendar onDateChange={handleDeadline} />
         </BootstrapDialog>
       </React.Fragment>
     </ThemeProvider>

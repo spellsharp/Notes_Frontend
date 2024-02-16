@@ -118,6 +118,7 @@ const HomePage = () => {
                   propsid={note.id}
                   propstitle={note.title}
                   propsbody={note.description}
+                  propsdeadline={note.deadline}
                   onDelete={handleDelete}
                   onUpdate={handleUpdate}
                 />

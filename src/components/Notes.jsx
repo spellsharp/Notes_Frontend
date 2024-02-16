@@ -4,7 +4,14 @@ import { MdArrowOutward } from "react-icons/md";
 import NotesModal from "./NotesModal";
 import CalendarModal from "./CalendarModal";
 
-const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
+const Notes = ({
+  propstitle,
+  propsbody,
+  propsid,
+  propsdeadline,
+  onDelete,
+  onUpdate,
+}) => {
   const [clicked, setClicked] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showCalendarModal, setShowCalendarModal] = useState(false);
@@ -121,6 +128,20 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
     setShowCalendarModal(true);
     console.log("Calendar clicked");
   };
+
+  const handleDeadlineChange = (date) => {
+    // const formattedDate = date.toISOString();
+    console.log(date);
+    setNoteData((prevData) => {
+      const newData = {
+        ...prevData,
+        deadline: date,
+      };
+      console.log("Changed deadline: ", newData);
+      return newData;
+    });
+  };
+
   return (
     <>
       <div
@@ -199,7 +220,11 @@ const Notes = ({ propstitle, propsbody, propsid, onDelete, onUpdate }) => {
         />
       )}
       {showCalendarModal && (
-        <CalendarModal isOpen={showCalendarModal} onClose={handleModalClose} />
+        <CalendarModal
+          isOpen={showCalendarModal}
+          onClose={handleModalClose}
+          onDeadlineChange={handleDeadlineChange}
+        />
       )}
     </>
   );
