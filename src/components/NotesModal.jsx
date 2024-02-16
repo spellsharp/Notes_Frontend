@@ -24,17 +24,45 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function NotesModal({ propsid, propstitle, propsbody, isOpen, onClose }) {
+export default function NotesModal({
+  propsid,
+  propstitle,
+  propsbody,
+  propsdeadline,
+  isOpen,
+  onClose,
+  onUpdate,
+}) {
   const [noteData, setNoteData] = useState({
     id: propsid,
     title: propstitle,
     description: propsbody,
+    deadline: propsdeadline,
   });
   const [open, setOpen] = useState(isOpen);
 
   const handleClose = () => {
     setOpen(false);
+    onUpdate(noteData);
     onClose();
+  };
+
+  const handleTitleChange = (e) => {
+    setNoteData((prev) => {
+      return {
+        ...prev,
+        title: e.target.value,
+      };
+    });
+  };
+
+  const handleBodyChange = (e) => {
+    setNoteData((prev) => {
+      return {
+        ...prev,
+        description: e.target.value,
+      };
+    });
   };
 
   return (
@@ -46,7 +74,11 @@ export default function NotesModal({ propsid, propstitle, propsbody, isOpen, onC
           open={open}
         >
           <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-            <input className="w-full bg-black bg-opacity-0 outline-none" defaultValue={propstitle}></input>
+            <input
+              onChange={handleTitleChange}
+              className="w-full bg-black bg-opacity-0 outline-none"
+              defaultValue={propstitle}
+            ></input>
           </DialogTitle>
           <IconButton
             aria-label="close"
@@ -59,7 +91,11 @@ export default function NotesModal({ propsid, propstitle, propsbody, isOpen, onC
             }}
           />
           <DialogContent dividers>
-            <textarea defaultValue={propsbody} className="w-[25vw] min-h-[70vh] bg-black bg-opacity-0 outline-none"></textarea>
+            <textarea
+              onChange={handleBodyChange}
+              defaultValue={propsbody}
+              className="w-[25vw] min-h-[70vh] bg-black bg-opacity-0 outline-none"
+            ></textarea>
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleClose}>

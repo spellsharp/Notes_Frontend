@@ -86,7 +86,7 @@ const Notes = ({
   };
 
   const handleArrowClick = () => {
-    setShowNotesModal(true);    
+    setShowNotesModal(true);
   };
 
   const handleTitleChange = (e) => {
@@ -121,7 +121,12 @@ const Notes = ({
 
   const handleCalendar = (e) => {
     e.stopPropagation();
-    setShowCalendarModal(true);    
+    setShowCalendarModal(true);
+  };
+
+  const handleNoteUpdate = (data) => {
+    setNoteData(data);
+    onUpdate(noteData);
   };
 
   const handleDeadlineChange = (date) => {
@@ -156,7 +161,7 @@ const Notes = ({
                 onChange={handleTitleChange}
                 placeholder="Title"
               ></input>
-              <div>
+              <div className="">
                 <MdArrowOutward
                   fontSize={"25px"}
                   onClick={handleArrowClick}
@@ -192,9 +197,7 @@ const Notes = ({
 
             <div className="flex justify-end">
               <div className="mt-5 flex space-x-5 text-gray-500">
-                <p className="text-sm">
-                  {formattedDate}
-                </p>
+                <p className="text-sm">{formattedDate}</p>
                 <button
                   onClick={handleCalendar}
                   className="hover:text-white transition-colors duration-200"
@@ -214,8 +217,11 @@ const Notes = ({
       </div>
       {showNotesModal && (
         <NotesModal
+          propsid={noteData.id}
           propstitle={noteData.title}
           propsbody={noteData.description}
+          propsdeadline={noteData.deadline}
+          onUpdate={handleNoteUpdate}
           isOpen={showNotesModal}
           onClose={handleModalClose}
         />
