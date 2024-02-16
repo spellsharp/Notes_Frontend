@@ -16,7 +16,7 @@ const Header = () => {
           <button
             onClick={logoutUser}
             style={linkstyle}
-            className="flex justify-end font-bold text-3xl"
+            className="flex justify-end font-bold text-3xl hover:opacity-80 transition-all duration-200"
           >
             <IoIosLogOut />
           </button>
