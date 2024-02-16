@@ -13,10 +13,10 @@ const customTheme = createTheme({
     mode: "dark",
     background: {
       default: "#171221",
-      paper: "rgba(62, 28, 121, 0.95)",
+      paper: "#171221",
     },
     primary: {
-      main: "#f3e0ec",
+      main: "#ffffff",
     },
   },
 });

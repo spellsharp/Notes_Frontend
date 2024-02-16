@@ -7,6 +7,7 @@ import AuthContext from "../context/AuthContext";
 
 const Notes = ({
   propstitle,
+  propsauthor = "admin",
   propsbody,
   propsid,
   propsdeadline,
@@ -22,6 +23,7 @@ const Notes = ({
   });
   const [noteData, setNoteData] = useState({
     id: propsid,
+    author: propsauthor,
     title: propstitle,
     description: propsbody,
     deadline: propsdeadline,
@@ -193,7 +195,7 @@ const Notes = ({
 
             <div className="flex justify-between items-center">
               <div onClick={(e) => e.stopPropagation()}>
-                <p className="text-sm text-gray-500">{user.username}</p>
+                <p className="text-sm text-gray-500">{noteData.author}</p>
               </div>
               <div
                 className="flex space-x-5 text-gray-500 w-fit pl-10 items-center"
