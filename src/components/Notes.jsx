@@ -172,7 +172,7 @@ const Notes = ({
             <hr className="opacity-5" />
             <br />
             <textarea
-              className="flex justify-end bg-transparent border-none outline-none min-w-full min-h-[75%] text-white overflow-hidden"
+              className="flex justify-end bg-transparent border-none outline-none min-w-full min-h-[75%] text-white overflow-hidden resize-none"
               value={noteData.description}
               onChange={handleBodyChange}
               placeholder="Take a note..."

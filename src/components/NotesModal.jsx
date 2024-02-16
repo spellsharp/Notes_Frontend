@@ -100,7 +100,7 @@ export default function NotesModal({
             <textarea
               onChange={handleBodyChange}
               defaultValue={propsbody}
-              className="w-[25vw] min-h-[70vh] bg-black bg-opacity-0 outline-none"
+              className="lg:min-w-[28vw] md:min-w-[50vw] sm:min-w-[70vw] min-h-[70vh] bg-black bg-opacity-0 outline-none resize-none"
             ></textarea>
           </DialogContent>
           <DialogActions>
