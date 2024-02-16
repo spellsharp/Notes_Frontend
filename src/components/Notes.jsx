@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { FaTrash, FaCalendar } from "react-icons/fa";
 import { MdArrowOutward } from "react-icons/md";
 import NotesModal from "./NotesModal";
 import CalendarModal from "./CalendarModal";
+import AuthContext from "../context/AuthContext";
 
 const Notes = ({
   propstitle,
@@ -26,6 +27,8 @@ const Notes = ({
     deadline: propsdeadline,
   });
   const editableRef = useRef(null);
+
+  const { user, logoutUser } = useContext(AuthContext);
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -159,9 +162,7 @@ const Notes = ({
                 placeholder="Title"
               ></input>
               <div className="hover:opacity-70 text-3xl cursor-pointer">
-                <MdArrowOutward
-                  onClick={handleArrowClick}
-                />
+                <MdArrowOutward onClick={handleArrowClick} />
               </div>
             </div>
             <hr className="opacity-5" />
@@ -190,13 +191,15 @@ const Notes = ({
               </p>
             </div>
 
-            <div className="flex justify-end">
-              <div className="mt-5 flex space-x-5 text-gray-500 w-fit pl-10" onClick={(e) => e.stopPropagation()}>
-                <div
-                  className="text-sm"
-                >
-                  {formattedDate}
-                </div>
+            <div className="flex justify-between items-center">
+              <div onClick={(e) => e.stopPropagation()}>
+                <p className="text-sm text-gray-500">{user.username}</p>
+              </div>
+              <div
+                className="flex space-x-5 text-gray-500 w-fit pl-10 items-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="text-sm">{formattedDate}</div>
                 <button
                   onClick={handleCalendar}
                   className="hover:text-white transition-colors duration-200"
