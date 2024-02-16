@@ -23,6 +23,7 @@ const Notes = ({
     id: propsid,
     title: propstitle,
     description: propsbody,
+    deadline: propsdeadline,
   });
   const editableRef = useRef(null);
 
@@ -141,6 +142,12 @@ const Notes = ({
       return newData;
     });
   };
+  const formattedDate = noteData.deadline
+    ? new Date(noteData.deadline).toLocaleDateString()
+    : "No deadline";
+  const formattedTime = noteData.deadline
+    ? new Date(noteData.deadline).toLocaleTimeString()
+    : "";
 
   return (
     <>
@@ -192,8 +199,11 @@ const Notes = ({
               </p>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-end">
               <div className="mt-5 flex space-x-5 text-gray-500">
+                <p className="text-sm">
+                  {formattedDate}
+                </p>
                 <button
                   onClick={handleCalendar}
                   className="hover:text-white transition-colors duration-200"

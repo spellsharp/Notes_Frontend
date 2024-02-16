@@ -38,6 +38,7 @@ const HomePage = () => {
         body: JSON.stringify({
           title: "",
           description: "",
+          deadline: Date(),
         }),
       });
       getData();
@@ -94,6 +95,7 @@ const HomePage = () => {
           body: JSON.stringify(noteData),
         }
       );
+      console.log("updating note:" + JSON.stringify(noteData));
     } catch (error) {
       console.error("Error:", error);
     }

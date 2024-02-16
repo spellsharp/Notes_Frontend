@@ -7,14 +7,15 @@ function MyCalendar({ onDateChange }) {
   const [date, setDate] = useState(new Date());
   const onChange = (newDate) => {
     const isoDate = newDate.toISOString();
-    setDate(newDate);
+    // const dateObj = new Date(isoDate);
+    setDate(isoDate);
     onDateChange(isoDate);
   };
   useEffect(() => {
     onDateChange(date);
   }, [date]);
 
-  const CalendarContainer = styled.div`
+  const CalendarContainer =   styled.div`
     .react-calendar {
       width: 350px;
       max-width: 100%;
