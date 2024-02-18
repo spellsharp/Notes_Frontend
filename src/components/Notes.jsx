@@ -7,13 +7,16 @@ import AuthContext from "../context/AuthContext";
 
 const Notes = ({
   propstitle,
-  propsauthor = "admin",
+  propsauthor,
   propsbody,
   propsid,
   propsdeadline,
+  propsispublic,
   onDelete,
   onUpdate,
+  onClick = true
 }) => {
+  const tokens = JSON.parse(localStorage.getItem("authTokens"));
   const [clicked, setClicked] = useState(false);
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [showCalendarModal, setShowCalendarModal] = useState(false);
@@ -27,6 +30,7 @@ const Notes = ({
     title: propstitle,
     description: propsbody,
     deadline: propsdeadline,
+    is_public: propsispublic,
   });
   const editableRef = useRef(null);
 
@@ -64,12 +68,15 @@ const Notes = ({
 
     updateNote();
   }, [noteData]);
+
+  
   const onCreate = async (data) => {
     try {
       const response = await fetch(`http://localhost:8000/notes/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + tokens["access"],
         },
         body: JSON.stringify(data),
       });
@@ -143,10 +150,22 @@ const Notes = ({
       return newData;
     });
   };
+
+  const handlePublicChange = (e) => {
+    const newValue = e.target.checked;
+    setNoteData((prevData) => ({
+      ...prevData,
+      is_public: newValue,
+    }));
+  };
+
   const formattedDate = noteData.deadline
     ? new Date(noteData.deadline).toLocaleDateString()
     : "No deadline";
 
+    if (onClick === false) {
+      setClicked(false);
+    }
   return (
     <>
       <div
@@ -175,6 +194,7 @@ const Notes = ({
               onChange={handleBodyChange}
               placeholder="Take a note..."
             ></textarea>
+            
           </div>
         ) : (
           <div className="overflow-hidden flex flex-col h-full justify-between">
@@ -194,8 +214,16 @@ const Notes = ({
             </div>
 
             <div className="flex justify-between items-center">
-              <div onClick={(e) => e.stopPropagation()}>
-                <p className="text-sm text-gray-500">{noteData.author}</p>
+              <div className="flex items-center justify-between space-x-2">
+              <input
+                onClick={(e) => e.stopPropagation()}
+                type="checkbox"
+                checked={noteData.is_public}
+                onChange={(e) => handlePublicChange(e)}
+              />
+                <p className="text-sm text-gray-500">
+                  {noteData.is_public ? "Public" : "Private"}
+                </p>
               </div>
               <div
                 className="flex space-x-5 text-gray-500 w-fit pl-10 items-center"

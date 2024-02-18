@@ -11,15 +11,17 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [addedNew, setAddedNew] = useState(false);
+  const tokens = JSON.parse(localStorage.getItem("authTokens"));
 
   const handleToggle = (toggle) => {
-    setToggle(toggle);
+    setToggle(!toggle);
   };
   const getData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/notes/", {
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens["access"],
         },
       });
       setData(response.data);
@@ -34,6 +36,7 @@ const HomePage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + tokens["access"],
         },
         body: JSON.stringify({
           title: "",
@@ -52,12 +55,15 @@ const HomePage = () => {
   useEffect(() => {
     getData();
     setAddedNew(false);
-  }, [addedNew]);
+  }, [addedNew, toggle]);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this note?")) {
       try {
         fetch(`http://localhost:8000/notes/${id}/`, {
+          headers: {
+            Authorization: "Bearer " + tokens["access"],
+          },
           method: "DELETE",
         });
         setData((prevData) => {
@@ -86,6 +92,7 @@ const HomePage = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + tokens["access"],
           },
           body: JSON.stringify(noteData),
         }
@@ -95,12 +102,36 @@ const HomePage = () => {
     }
   };
 
+  const handleSearch = async (searchTerm) => {
+    if (toggle) {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/notes/?global_search=${searchTerm}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + tokens["access"],
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setData(data);
+          });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+  };
+
   return (
     <div className="py-3">
       <div className="p-3 lg:pl-24 sm:p-2 md:p-5 space-y-14">
         <Header />
-        <SearchBar onToggleChange={handleToggle} />
+        <SearchBar onToggleChange={handleToggle} onQueryChange={handleSearch} />
       </div>
+
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
         <div>
           <TransitionGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -115,6 +146,7 @@ const HomePage = () => {
                   propstitle={note.title}
                   propsbody={note.description}
                   propsdeadline={note.deadline}
+                  propsispublic={note.is_public}
                   onDelete={handleDelete}
                   onUpdate={handleUpdate}
                 />
