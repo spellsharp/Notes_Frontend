@@ -4,6 +4,7 @@ import { MdArrowOutward } from "react-icons/md";
 import NotesModal from "./NotesModal";
 import CalendarModal from "./CalendarModal";
 import AuthContext from "../context/AuthContext";
+import NotesMenu from "./NotesMenu";
 
 const Notes = ({
   propstitle,
@@ -14,7 +15,7 @@ const Notes = ({
   propsispublic,
   onDelete,
   onUpdate,
-  onClick = true
+  editable=false,
 }) => {
   const tokens = JSON.parse(localStorage.getItem("authTokens"));
   const [clicked, setClicked] = useState(false);
@@ -69,14 +70,13 @@ const Notes = ({
     updateNote();
   }, [noteData]);
 
-  
   const onCreate = async (data) => {
     try {
       const response = await fetch(`http://localhost:8000/notes/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + tokens["access"],
+          Authorization: "Bearer " + tokens["access"],
         },
         body: JSON.stringify(data),
       });
@@ -159,13 +159,6 @@ const Notes = ({
     }));
   };
 
-  const formattedDate = noteData.deadline
-    ? new Date(noteData.deadline).toLocaleDateString()
-    : "No deadline";
-
-    if (onClick === false) {
-      setClicked(false);
-    }
   return (
     <>
       <div
@@ -173,7 +166,7 @@ const Notes = ({
         onClick={handleClick}
         className={`shadow-${noteClassname.shadow} shadow-slate-950 rounded-xl border border-white border-opacity-10 text-white max-w-[400px] min-h-[250px] p-7 hover:border-opacity-10`}
       >
-        {clicked ? (
+        {clicked && editable ? (
           <div className="h-full">
             <div className="flex">
               <input
@@ -194,7 +187,6 @@ const Notes = ({
               onChange={handleBodyChange}
               placeholder="Take a note..."
             ></textarea>
-            
           </div>
         ) : (
           <div className="overflow-hidden flex flex-col h-full justify-between">
@@ -212,38 +204,16 @@ const Notes = ({
                 {noteData.description}
               </p>
             </div>
-
-            <div className="flex justify-between items-center">
-              <div className="flex items-center justify-between space-x-2">
-              <input
-                onClick={(e) => e.stopPropagation()}
-                type="checkbox"
-                checked={noteData.is_public}
-                onChange={(e) => handlePublicChange(e)}
-              />
-                <p className="text-sm text-gray-500">
-                  {noteData.is_public ? "Public" : "Private"}
-                </p>
+            {editable && (
+              <div onClick={(e) => e.stopPropagation()}>
+                <NotesMenu
+                  noteData={noteData}
+                  onCalendar={handleCalendar}
+                  onDelete={handleDelete}
+                  onPublicChange={handlePublicChange}
+                />
               </div>
-              <div
-                className="flex space-x-5 text-gray-500 w-fit pl-10 items-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="text-sm">{formattedDate}</div>
-                <button
-                  onClick={handleCalendar}
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  <FaCalendar />
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         )}
       </div>

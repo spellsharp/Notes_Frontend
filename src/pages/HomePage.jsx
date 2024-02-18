@@ -11,6 +11,7 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [addedNew, setAddedNew] = useState(false);
+  const [searching, setSearching] = useState(false);
   const tokens = JSON.parse(localStorage.getItem("authTokens"));
 
   const handleToggle = (toggle) => {
@@ -55,6 +56,7 @@ const HomePage = () => {
   useEffect(() => {
     getData();
     setAddedNew(false);
+    setSearching(false);
   }, [addedNew, toggle]);
 
   const handleDelete = async (id) => {
@@ -119,6 +121,7 @@ const HomePage = () => {
           .then((data) => {
             setData(data);
           });
+        setSearching(true);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -141,15 +144,29 @@ const HomePage = () => {
                 timeout={500}
                 classNames="note-transition"
               >
-                <Notes
-                  propsid={note.id}
-                  propstitle={note.title}
-                  propsbody={note.description}
-                  propsdeadline={note.deadline}
-                  propsispublic={note.is_public}
-                  onDelete={handleDelete}
-                  onUpdate={handleUpdate}
-                />
+                {searching ? (
+                  <Notes
+                    propsid={note.id}
+                    propstitle={note.title}
+                    propsbody={note.description}
+                    propsdeadline={note.deadline}
+                    propsispublic={note.is_public}
+                    onDelete={handleDelete}
+                    onUpdate={handleUpdate}
+                    editable={false}
+                  />
+                ) : (
+                  <Notes
+                    propsid={note.id}
+                    propstitle={note.title}
+                    propsbody={note.description}
+                    propsdeadline={note.deadline}
+                    propsispublic={note.is_public}
+                    onDelete={handleDelete}
+                    onUpdate={handleUpdate}
+                    editable={true}
+                  />
+                )}
               </CSSTransition>
             ))}
           </TransitionGroup>
