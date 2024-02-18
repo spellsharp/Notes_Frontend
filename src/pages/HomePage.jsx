@@ -125,6 +125,26 @@ const HomePage = () => {
       } catch (error) {
         console.error("Error:", error);
       }
+    } else {
+      // TODO: Fix this unmodular code.
+      try {
+        const response = await fetch(
+          `http://localhost:8000/notes/?local_search=${searchTerm}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + tokens["access"],
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setData(data);
+          });
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
   };
 
