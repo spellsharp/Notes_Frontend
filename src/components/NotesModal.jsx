@@ -38,6 +38,7 @@ export default function NotesModal({
   isOpen,
   onClose,
   onUpdate,
+  editable = true,
 }) {
   const [noteData, setNoteData] = useState({
     id: propsid,
@@ -79,35 +80,62 @@ export default function NotesModal({
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-            <input
-              onChange={handleTitleChange}
-              className="w-full bg-black bg-opacity-0 outline-none"
-              defaultValue={propstitle}
-            ></input>
-          </DialogTitle>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          />
-          <DialogContent dividers>
-            <textarea
-              onChange={handleBodyChange}
-              defaultValue={propsbody}
-              className="lg:min-w-[28vw] md:min-w-[50vw] sm:min-w-[70vw] min-h-[70vh] bg-black bg-opacity-0 outline-none resize-none"
-            ></textarea>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-              Save changes
-            </Button>
-          </DialogActions>
+          {editable ? (
+            <>
+              <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                <input
+                  onChange={handleTitleChange}
+                  className="w-full bg-black bg-opacity-0 outline-none"
+                  defaultValue={propstitle}
+                ></input>
+              </DialogTitle>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              />
+              <DialogContent dividers>
+                <textarea
+                  onChange={handleBodyChange}
+                  defaultValue={propsbody}
+                  className="lg:min-w-[28vw] md:min-w-[50vw] sm:min-w-[70vw] min-h-[70vh] bg-black bg-opacity-0 outline-none resize-none"
+                ></textarea>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose}>
+                  Save changes
+                </Button>
+              </DialogActions>
+            </>
+          ) : (
+            <>
+              <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                <div className="w-full bg-black bg-opacity-0 outline-none">
+                  {propstitle}
+                </div>
+              </DialogTitle>
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              />
+              <DialogContent dividers>
+                <div className="lg:min-w-[28vw] md:min-w-[50vw] sm:min-w-[70vw] min-h-[70vh] bg-black bg-opacity-0 outline-none resize-none">
+                  {propsbody}
+                </div>
+              </DialogContent>
+            </>
+          )}
         </BootstrapDialog>
       </React.Fragment>
     </ThemeProvider>

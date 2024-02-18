@@ -15,7 +15,7 @@ const Notes = ({
   propsispublic,
   onDelete,
   onUpdate,
-  editable=false,
+  editable = false,
 }) => {
   const tokens = JSON.parse(localStorage.getItem("authTokens"));
   const [clicked, setClicked] = useState(false);
@@ -191,13 +191,18 @@ const Notes = ({
         ) : (
           <div className="overflow-hidden flex flex-col h-full justify-between">
             <div>
-              <h1 className="text-xl font-bold mb-4">
-                {noteData.title === "" && noteData.description === "" ? (
-                  <p className="text-gray-400">Empty Note</p>
-                ) : (
-                  noteData.title
-                )}
-              </h1>
+              <div className="flex justify-between">
+                <h1 className="text-xl font-bold mb-4">
+                  {noteData.title === "" && noteData.description === "" ? (
+                    <p className="text-gray-400">Empty Note</p>
+                  ) : (
+                    noteData.title
+                  )}
+                </h1>
+                <div className="hover:opacity-70 text-3xl cursor-pointer">
+                  <MdArrowOutward onClick={handleArrowClick} />
+                </div>
+              </div>
               <hr className="opacity-5" />
               <br />
               <p className="overflow-hidden whitespace-nowrap overflow-ellipsis">
@@ -226,6 +231,7 @@ const Notes = ({
           onUpdate={handleNoteUpdate}
           isOpen={showNotesModal}
           onClose={handleModalClose}
+          editable={editable}
         />
       )}
       {showCalendarModal && (
