@@ -190,6 +190,7 @@ const HomePage = () => {
                     propsbody={note.description}
                     propsdeadline={note.deadline}
                     propsispublic={note.is_public}
+                    propsauthor={note.author}
                     onDelete={handleDelete}
                     onUpdate={handleUpdate}
                     editable={false}
@@ -201,6 +202,7 @@ const HomePage = () => {
                     propsbody={note.description}
                     propsdeadline={note.deadline}
                     propsispublic={note.is_public}
+                    propsauthor={note.author}
                     onDelete={handleDelete}
                     onUpdate={handleUpdate}
                     editable={true}

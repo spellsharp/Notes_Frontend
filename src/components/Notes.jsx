@@ -209,16 +209,21 @@ const Notes = ({
                 {noteData.description}
               </p>
             </div>
-            {editable && (
-              <div onClick={(e) => e.stopPropagation()}>
-                <NotesMenu
-                  noteData={noteData}
-                  onCalendar={handleCalendar}
-                  onDelete={handleDelete}
-                  onPublicChange={handlePublicChange}
-                />
+            <div className="space-y-1">
+              {editable && (
+                <div onClick={(e) => e.stopPropagation()}>
+                  <NotesMenu
+                    noteData={noteData}
+                    onCalendar={handleCalendar}
+                    onDelete={handleDelete}
+                    onPublicChange={handlePublicChange}
+                  />
+                </div>
+              )}
+              <div>
+                <p className="opacity-40 text-sm">by {noteData.author["username"]}</p>
               </div>
-            )}
+            </div>
           </div>
         )}
       </div>
