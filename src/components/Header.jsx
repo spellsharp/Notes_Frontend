@@ -12,7 +12,7 @@ const Header = () => {
     <div className="">
       {user ? (
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-white">Welcome, {user.username}</h1>
+          <h1 className="text-3xl font-bold text-white">Hi, {user.username}!</h1>
           <button
             onClick={logoutUser}
             style={linkstyle}

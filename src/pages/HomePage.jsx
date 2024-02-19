@@ -6,6 +6,7 @@ import SearchBar from "../components/SearchBar";
 import "../styles/HomePage.css";
 import axios from "axios";
 import Header from "../components/Header";
+import create_new_note from "../assets/create_note.svg";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
@@ -158,6 +159,24 @@ const HomePage = () => {
       <div className="p-3 lg:pt-24 lg:pl-24 lg:pr-24 sm:p-2 md:p-5">
         <div>
           <TransitionGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {data.length === 0 ? (
+              searching ? (
+                <div className="w-full text-3xl font-bold text-gray-500">
+                  <p className="my-auto">No notes found!</p>
+                </div>
+              ) : (
+                <div className="w-full text-3xl font-bold text-gray-500">
+                  <img
+                    className="w-32 h-32 text-center opacity-50"
+                    src={create_new_note}
+                    alt="Create new note"
+                  />
+                  <p className="my-auto">Create your first note!</p>
+                </div>
+              )
+            ) : (
+              <></>
+            )}
             {data.map((note) => (
               <CSSTransition
                 key={note.id}
