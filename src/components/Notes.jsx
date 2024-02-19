@@ -159,6 +159,8 @@ const Notes = ({
     }));
   };
 
+  // const author = noteData.author["username"];
+
   return (
     <>
       <div
@@ -221,7 +223,9 @@ const Notes = ({
                 </div>
               )}
               <div>
-                <p className="opacity-40 text-sm">by {noteData.author["username"]}</p>
+                <p className="opacity-40 text-sm">
+                  {/* {author} */}
+                </p>
               </div>
             </div>
           </div>
