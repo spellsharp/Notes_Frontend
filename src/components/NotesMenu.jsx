@@ -22,6 +22,7 @@ const NotesMenu = ({ noteData, onCalendar, onDelete, onPublicChange }) => {
           type="checkbox"
           checked={noteData.is_public}
           onChange={(e) => handlePublicChange(e)}
+          className="form-checkbox h-5 w-5 text-blue-500"
         />
         <p className="text-sm text-gray-500">
           {noteData.is_public ? "Public" : "Private"}
